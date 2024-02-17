@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>The Reef - A-Frame coral reef builder example for WebVR</title>
+    <meta
+      name="description"
+      content="The Reef - A-Frame coral reef builder example for WebVR"
+    />
+
+    <script src="assets/js/aframe-event-set-component.min.js"></script>
+    <script src="assets/js/aframe-look-at-component.min.js"></script>
+    <script src="assets/js/aframe-selection-component.min.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.2.0/dist/aframe-extras.min.js"></script>
+  </head>
+  <body>
+    <a-scene
+      inspector="url: https://aframe.io/releases/0.3.0/aframe-inspector.min.js"
+      fog="type: exponential; color: #0894d3; density: 0.06;"
+    >
+      <a-entity
+        position="0 4 0"
+        sound="src: url(assets/media/sounds/underwater.mp3); autoplay: true; loop: true; volume:1"
+      >
+      </a-entity>
+
+      <!-- start: Camera -->
+      <a-entity
+        id="camera"
+        position="0 .6 4"
+        camera="userHeight: 1"
+        look-controls-enabled
+        look-controls
+      >
+        <a-entity
+          id="cursor"
+          raycaster="objects: .clickable"
+          cursor-visible="enabled: false"
+          cursor="fuse: false;"
+          position="0 0 -1.9"
+          geometry="primitive: ring; radiusInner: 0.07; radiusOuter: 0.10"
+          material="shader: flat; color: #4CC3D9"
+        >
+          <a-animation
+            begin="click"
+            easing="ease-in"
+            attribute="scale"
+            fill="backwards"
+            from="0.1 0.1 0.1"
+            to="1 1 1"
+            dur="150"
+          ></a-animation>
+        </a-entity>
+      </a-entity>
+      <!-- end: Camera -->
+
+      <!-- start: Sky -->
+      <a-sky color="#a4bede"></a-sky>
+      <!-- end: Sky -->
+
+      <!-- start: Ocean top -->
+      <a-plane
+        color="#ffffff"
+        position="0 4.5 0"
+        height="11"
+        width="11"
+        rotation="90 90 0"
+        material="opacity:0.4"
+        scale="15 15 15"
+      ></a-plane>
+      <a-entity position="0 9 0" color="#b6e8fe">
+        <a-ocean width="50" depth="90" density="40">
+          <a-animation
+            attribute="visible"
+            delay="25000"
+            to="true"
+          ></a-animation>
+        </a-ocean>
+      </a-entity>
+      <!-- end: Ocean top -->
+
+      <!-- start: Seafloor Shadow -->
+      <a-ocean
+        width="50"
+        depth="500"
+        density="50"
+        color="#75705e"
+        position="0 -0.15 0"
+        opacity="0.03"
+      >
+        <a-animation attribute="visible" delay="55000" to="true"></a-animation>
+      </a-ocean>
+      <!-- end: Seafloor Shadow -->
+
+      <!-- start: Seafloor plane -->
+      <a-plane
+        id="seafloorCoral"
+        position="0 0 0"
+        rotation="-90 0 0"
+        width="4"
+        height="40"
+        color="#d9d0ae"
+        scale="15 15 15"
+      ></a-plane>
+      <!-- end: Seafloor plane -->
+
+      <!-- start: Ocean Lighting -->
+      <a-entity
+        light="type: hemisphere; color: #ffffff; groundColor: #000000; intensity: 0.9;"
+        position="25 8 -25"
+      ></a-entity>
+      <a-entity
+        light="type: hemisphere; color: #ffffff; groundColor: #000000; intensity: 0.3;"
+        position="25 8 25"
+      ></a-entity>
+      <a-entity
+        light="type: ambient; color: #ffffff; intensity: 0.5;"
+        position="25 8 -25"
+      ></a-entity>
+      <!-- end: Ocean Lighting -->
+      <a-entity
+        rotation="0 0 0"
+        animation="property: rotation; to: 0 360 0; loop: true; dur: 30000"
+      >
+        <!-- Object 3D Golden Fish -->
+        <a-entity
+          gltf-model="assets/fish.glb"
+          scale="0.1 0.1 0.1"
+          position="0.13538 1.0434 -4.70849"
+          animation="property: position; to: 0.13538 1.0434 -4.70849; dur: 2; easing: linear; loop: true"
+          rotation="0 210.00000000000003 0"
+          animation-mixer="clip: MorphBake"
+        ></a-entity>
+      </a-entity>
+      <!-- Object 3D Penyu -->
+
+      <a-entity
+        gltf-model="assets/turtle.glb"
+        scale="3 3 3"
+        position="1 1.0434 -15"
+        animation="property: position; to: 0.13538 1.0434 100; dur: 100000;"
+        rotation="0 360 0"
+        animation-mixer="clip: Action"
+      >
+      </a-entity>
+      <a-entity
+        gltf-model="assets/turtle.glb"
+        scale="3 3 3"
+        position="3 1.0434 -15"
+        animation="property: position; to: 0.13538 1.0434 100; dur: 100000;"
+        rotation="0 360 0"
+        animation-mixer="clip: Action"
+      >
+      </a-entity>
+      <a-entity
+        gltf-model="assets/turtle.glb"
+        scale="3 3 3"
+        position="5 1.0434 -15"
+        animation="property: position; to: 0.13538 1.0434 100; dur: 100000;"
+        rotation="0 360 0"
+        animation-mixer="clip: Action"
+      >
+      </a-entity>
+      <a-entity
+        gltf-model="assets/school_fish.glb"
+        scale="1 1 1"
+        position="1 2 -10"
+        rotation="0 360 0"
+        animation-mixer="clip: MorphBake"
+      >
+      </a-entity>
+      <a-entity
+        gltf-model="assets/whale.glb"
+        scale="3 3 3"
+        position="1 20 -40"
+        animation="property: position; to:1 20 100; dur: 90000;"
+        rotation="0 360 0"
+        animation-mixer="clip: Whale Swimming"
+      >
+      </a-entity>
+
+      <!-- Object 3D Coral -->
+      <a-entity
+        gltf-model="assets/coral.glb"
+        rotation="0 180 0"
+        scale="5 5 5"
+      ></a-entity>
+    </a-scene>
+
+    <a-camera
+      camera=""
+      position="0.92545454900041 1.6 -3.1905514365552"
+      rotation="8.47977536793618 -4.354479242994256 0"
+      look-controls=""
+      wasd-controls=""
+      data-aframe-inspector-original-camera=""
+    ></a-camera>
+  </body>
+</html>
